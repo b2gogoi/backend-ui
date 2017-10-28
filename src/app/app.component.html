@@ -1,0 +1,25 @@
+<mat-toolbar>Oshyer Backend</mat-toolbar>
+<div class="container" *ngIf="authService.isLoggedIn()">
+  <div>
+  <span >
+  Logged in as <b>{{ authService.getUser() }}</b>
+    <a (click)="logout()">Log out</a></span>
+  </div>
+
+  <nav mat-tab-nav-bar *ngIf="message">
+    <a mat-tab-link
+       *ngFor="let tab of message.data; let i = index"
+       [routerLink]="tab.link"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      {{ tab.name }}
+    </a>
+  </nav>
+</div>
+
+
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+

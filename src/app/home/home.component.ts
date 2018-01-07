@@ -13,8 +13,8 @@ import { User } from './user.model';
 import { AdminApiService } from '../admin-api.service';
 import {TalaDatabase} from '../tala.database';
 import {TalaDatasource} from '../tala.datasource';
-import {Employee} from '../admin/employee.model';
-import {EmployeeComponent} from '../admin/employee/employee.component';
+import {Employee} from '../employee.model';
+import {EmployeeComponent} from '../employee/employee.component';
 
 @Component({
   selector: 'app-home',

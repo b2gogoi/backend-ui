@@ -25,16 +25,6 @@ export class AuthService {
 
   constructor(private http: Http) {}
 
-  permissions(): Observable<any> {
-
-      const queryUrl = '/api/admin/permissions';
-
-      return this.http.get(queryUrl)
-      .map((response: Response) => {
-        return (<any>response.json());
-      });
-    }
-
     login(user: string, password: string): Observable<any> {
 
       const userObj = {

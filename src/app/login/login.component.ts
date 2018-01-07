@@ -32,7 +32,6 @@ export class LoginComponent {
       tabs = [
         new Tabs('Dashboard', '/dashboard', 'dashboard'),
         new Tabs('Driver Applications', '/applications', 'applications'),
-        new Tabs('Firebase Upload', '/firebase', 'firebase'),
         new Tabs('Drivers', '/drivers', 'drivers')
       ];
 

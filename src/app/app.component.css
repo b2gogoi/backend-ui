@@ -1,0 +1,50 @@
+.app-header {
+  margin-left: -8px;
+  font-size: 17px;
+  color: #A2A3A4;
+  margin-top: -2px;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.container {
+  margin-top: 16px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.mat-app-background {
+  min-height: 100%;
+}
+
+.user {
+  font-size: medium;
+}
+
+.mat-toolbar {
+  padding-right: 40px;
+}
+
+.mat-toolbar-row {
+  /*height: 44px;*/
+}
+
+.mat-tab-link {
+  opacity: 0.8;
+  min-width: unset;
+}
+
+.tabs {
+  color: #FFFFFF !important;
+  text-decoration: none;
+  /*font-size: medium;*/
+}
+
+h2 {
+  color: #3A474F;
+}
+

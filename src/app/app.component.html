@@ -1,25 +1,45 @@
-<mat-toolbar>Oshyer Backend</mat-toolbar>
-<div class="container" *ngIf="authService.isLoggedIn()">
-  <div>
-  <span >
-  Logged in as <b>{{ authService.getUser() }}</b>
-    <a (click)="logout()">Log out</a></span>
+<div class="mat-app-background">
+  <mat-toolbar color="primary">
+    <img width="82px" height="33px" src="/assets/images/oshyer-logo.png">
+    <span class="app-header">Admin</span>
+
+    <div class="container" *ngIf="authService.isLoggedIn()">
+
+      <nav mat-tab-nav-bar color="accent" *ngIf="message && authService.isLoggedIn()">
+        <a mat-tab-link class="tabs"
+           *ngFor="let tab of message.data; let i = index"
+           [routerLink]="tab.link"
+           routerLinkActive #rla="routerLinkActive"
+           [active]="rla.isActive">
+          {{ tab.name }}
+        </a>
+      </nav>
+    </div>
+
+    <div style="position: fixed; left: 92%">
+      <mat-menu #appMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon *ngIf="'admin' === authService.getRole()"> supervisor_account </mat-icon>
+          <mat-icon *ngIf="'admin' !== authService.getRole()"> perm_identity </mat-icon>
+          <span>{{ authService.getRole() | titlecase }}</span>
+        </button>
+
+        <button mat-menu-item (click)="logout()">
+          <mat-icon> exit_to_app </mat-icon>
+          <a>Logout</a>
+        </button>
+      </mat-menu>
+
+      <button mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="authService.isLoggedIn()">
+        <span class="user">{{ authService.getUser()  | titlecase }}</span>
+        <mat-icon color="accent">account_circle</mat-icon>
+      </button>
+    </div>
+
+  </mat-toolbar>
+
+  <div class="container">
+    <router-outlet></router-outlet>
   </div>
 
-  <nav mat-tab-nav-bar *ngIf="message">
-    <a mat-tab-link
-       *ngFor="let tab of message.data; let i = index"
-       [routerLink]="tab.link"
-       routerLinkActive #rla="routerLinkActive"
-       [active]="rla.isActive">
-      {{ tab.name }}
-    </a>
-  </nav>
 </div>
-
-
-
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
-

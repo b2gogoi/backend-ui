@@ -14,7 +14,7 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
-  MatInputModule,
+  MatInputModule, MatMenuModule,
   MatNativeDateModule,
   MatPaginatorModule,
   MatSelectModule,
@@ -26,7 +26,6 @@ import {
   MatTooltipModule
 } from '@angular/material';
 
-import { LanguagePipe } from './language.pipe';
 import { PhonePipe } from './phone.pipe';
 
 import { AppComponent } from './app.component';
@@ -35,50 +34,31 @@ import { LoginComponent } from './login/login.component';
 import { AUTH_PROVIDERS } from './auth.service';
 import { LoggedInGuard } from './logged-in.guard';
 import { AdminApiService } from './admin-api.service';
-import { AdminComponent } from './admin/admin.component';
-import { LoanComponent } from './loan/loan.component';
-import { EmployeeComponent } from './admin/employee/employee.component';
-import { LoanTermComponent } from './loan/loan-term/loan-term.component';
-import { ApprovalControlsComponent } from './approval-controls/approval-controls.component';
-import { ExperimentComponent } from './approval-controls/experiment/experiment.component';
-import { CustomerComponent } from './home/customer/customer.component';
-import { LoanApplicationComponent } from './home/customer/loan-application/loan-application.component';
-import { VolumeControlComponent } from './volume-control/volume-control.component';
-import { DownloadCsvComponent } from './download-csv/download-csv.component';
 import { DatePipe } from '@angular/common';
-import { LoansDueComponent } from './loans-due/loans-due.component';
-import { DriversComponent } from './drivers/drivers.component';
-import {VehiclePipe} from './vehicle.pipe';
-import {DriverComponent} from './drivers/driver/driver.component';
+import { DownloadCsvComponent } from './download-csv/download-csv.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FirebaseStorageComponent } from './firebase-storage/firebase-storage.component';
-import {firebaseConfig} from '../environments/firebase.config';
-import {AngularFireModule} from 'angularfire2';
-import {AngularFireDatabaseModule} from 'angularfire2/database';
-import {AngularFireAuthModule} from 'angularfire2/auth';
+import { EmployeeComponent } from './employee/employee.component';
+import { DriversComponent } from './drivers/drivers.component';
+import { VehiclePipe } from './vehicle.pipe';
+import { DriverComponent } from './drivers/driver/driver.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    { path: '', redirectTo: 'applications', pathMatch: 'full' },
     {
       path: 'dashboard',
       component: DashboardComponent,
       canActivate: [LoggedInGuard]
     },
-    /*{
-      path: 'firebase',
-      component: FirebaseStorageComponent,
-      canActivate: [LoggedInGuard]
-    },*/
     {
       path: 'applications',
       component: HomeComponent,
       canActivate: [LoggedInGuard]
     },
-    {
+    /*{
       path: 'dashboard/customer/:id',
       component: CustomerComponent,
       canActivate: [LoggedInGuard]
-    },
+    },*/
     {
       path: 'drivers',
       component: DriversComponent,
@@ -89,29 +69,18 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    LanguagePipe,
     PhonePipe,
     VehiclePipe,
     AppComponent,
     HomeComponent,
     LoginComponent,
-    AdminComponent,
-    LoanComponent,
-    EmployeeComponent,
-    LoanTermComponent,
-    ApprovalControlsComponent,
-    ExperimentComponent,
-    CustomerComponent,
-    LoanApplicationComponent,
-    VolumeControlComponent,
-    DownloadCsvComponent,
-    LoansDueComponent,
-    DriverComponent,
-    DriversComponent,
     DashboardComponent,
-    FirebaseStorageComponent
+    DownloadCsvComponent,
+    EmployeeComponent,
+    DriverComponent,
+    DriversComponent
   ],
-  entryComponents: [EmployeeComponent, ExperimentComponent, LoanTermComponent, LoanApplicationComponent, DriverComponent],
+  entryComponents: [EmployeeComponent, DriverComponent ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -120,9 +89,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     // NgbModule.forRoot(),
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
@@ -133,6 +99,7 @@ const routes: Routes = [
     MatGridListModule,
     MatIconModule,
     MatInputModule,
+    MatMenuModule,
     MatNativeDateModule,
     MatPaginatorModule,
     MatSelectModule,

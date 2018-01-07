@@ -1,0 +1,52 @@
+<h2>Admin Access</h2>
+
+<div>
+  <button mat-raised-button color="primary" (click)="openDialog()">Create New User</button>
+  <app-download-csv
+    [displayedColumns]="displayedColumns"
+    [headers]="header"
+    [dataSource]="dataSource"
+    fileName="Admin Users"></app-download-csv>
+</div>
+
+<p></p>
+
+<div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+  {{ errorMsg }}
+</div>
+<div class="alert alert-success" role="alert" *ngIf="message">
+  {{ message }}
+</div>
+<div *ngIf="!employeeDatabase">
+  No employees were found
+</div>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['id'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let emp"> {{ emp.id }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['username'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let emp"> {{ emp.username }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['role'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let emp"> {{ emp.role || 'Not assigned' }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let emp; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator *ngIf="employeeDatabase" #paginator
+                 [length]="employeeDatabase.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="5"
+                 [pageSizeOptions]="[5, 10, 25, 50]">
+  </mat-paginator>
+</div>

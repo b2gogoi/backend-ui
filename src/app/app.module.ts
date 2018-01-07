@@ -4,13 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import {
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatChipsModule,
   MatDatepickerModule,
   MatDialogModule,
   MatExpansionModule,
   MatFormFieldModule,
+  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatNativeDateModule,
@@ -45,11 +47,30 @@ import { VolumeControlComponent } from './volume-control/volume-control.componen
 import { DownloadCsvComponent } from './download-csv/download-csv.component';
 import { DatePipe } from '@angular/common';
 import { LoansDueComponent } from './loans-due/loans-due.component';
+import { DriversComponent } from './drivers/drivers.component';
+import {VehiclePipe} from './vehicle.pipe';
+import {DriverComponent} from './drivers/driver/driver.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { FirebaseStorageComponent } from './firebase-storage/firebase-storage.component';
+import {firebaseConfig} from '../environments/firebase.config';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
+import {AngularFireAuthModule} from 'angularfire2/auth';
 
 const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     {
       path: 'dashboard',
+      component: DashboardComponent,
+      canActivate: [LoggedInGuard]
+    },
+    /*{
+      path: 'firebase',
+      component: FirebaseStorageComponent,
+      canActivate: [LoggedInGuard]
+    },*/
+    {
+      path: 'applications',
       component: HomeComponent,
       canActivate: [LoggedInGuard]
     },
@@ -59,28 +80,8 @@ const routes: Routes = [
       canActivate: [LoggedInGuard]
     },
     {
-      path: 'loan-terms',
-      component: LoanComponent,
-      canActivate: [LoggedInGuard]
-    },
-    {
-      path: 'approval-controls',
-      component: ApprovalControlsComponent,
-      canActivate: [LoggedInGuard]
-    },
-    {
-      path: 'volume-controls',
-      component: VolumeControlComponent,
-      canActivate: [LoggedInGuard]
-    },
-    {
-      path: 'loans-due',
-      component: LoansDueComponent,
-      canActivate: [LoggedInGuard]
-    },
-    {
-      path: 'admin-access',
-      component: AdminComponent,
+      path: 'drivers',
+      component: DriversComponent,
       canActivate: [LoggedInGuard]
     },
     { path: 'login', component: LoginComponent }
@@ -90,6 +91,7 @@ const routes: Routes = [
   declarations: [
     LanguagePipe,
     PhonePipe,
+    VehiclePipe,
     AppComponent,
     HomeComponent,
     LoginComponent,
@@ -103,9 +105,13 @@ const routes: Routes = [
     LoanApplicationComponent,
     VolumeControlComponent,
     DownloadCsvComponent,
-    LoansDueComponent
+    LoansDueComponent,
+    DriverComponent,
+    DriversComponent,
+    DashboardComponent,
+    FirebaseStorageComponent
   ],
-  entryComponents: [EmployeeComponent, ExperimentComponent, LoanTermComponent, LoanApplicationComponent],
+  entryComponents: [EmployeeComponent, ExperimentComponent, LoanTermComponent, LoanApplicationComponent, DriverComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -114,12 +120,17 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     // NgbModule.forRoot(),
     BrowserAnimationsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     MatButtonModule,
     MatCardModule,
+    MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
     MatFormFieldModule,
     MatExpansionModule,
+    MatGridListModule,
     MatIconModule,
     MatInputModule,
     MatNativeDateModule,

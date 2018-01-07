@@ -1,0 +1,61 @@
+<h2>Driver Applications</h2>
+
+<p></p>
+<div *ngIf="!applicationDatabase">
+  No pending driver applications found
+</div>
+
+<app-download-csv *ngIf="!applicationDatabase"
+  [displayedColumns]="displayedColumns"
+  [headers]="header"
+  [dataSource]="dataSource"
+  fileName="Driver Applications"></app-download-csv>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="firstname">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['firstname'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.firstname }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastname">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['lastname'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.lastname }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['phone'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.phone | phone }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['email'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['created_at'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['created_at'] | date: 'dd-MMM-yy hh:mm'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['action'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a (click)="showDriver(row['id'])"><mat-icon>zoom_in</mat-icon></a>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator *ngIf="applicationDatabase" #paginator
+                 [length]="applicationDatabase.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 50]">
+  </mat-paginator>
+</div>

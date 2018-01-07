@@ -1,0 +1,38 @@
+<form (ngSubmit)="login(loginForm.value)">
+  <mat-card class="login-card" color="primary">
+    <mat-card-title>
+      Login
+    </mat-card-title>
+
+    <mat-card-content>
+      <mat-form-field>
+        <input required minlength="3" maxlength="20" placeholder="Username" type="text" matInput tabindex="1"
+               name="username"
+               [formControl]="loginForm.controls.username" [(ngModel)]="loginModel.username" />
+        <mat-error *ngIf="loginForm.controls.username.hasError('required')">
+          Username is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls.username.hasError('minlength')">
+          Username should be atleast <strong>3</strong> characters
+        </mat-error>
+
+      </mat-form-field>
+      <mat-form-field>
+        <input required minlength="4" maxlength="8" placeholder="Password" type="password" matInput
+               tabindex="2" name="password"
+               [formControl]="loginForm.controls.password" [(ngModel)]="loginModel.password" />
+        <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls.password.hasError('minlength')">
+          Password is too short
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.pristine || loginForm.invalid">Submit</button>
+    </mat-card-actions>
+
+  </mat-card>
+</form>

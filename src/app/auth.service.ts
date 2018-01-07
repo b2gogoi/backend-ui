@@ -52,7 +52,7 @@ export class AuthService {
       localStorage.removeItem('token');
       localStorage.removeItem('roles');
       localStorage.removeItem('tabs');
-      localStorage.removeItem('loan-terms');
+      localStorage.removeItem('vehicle-types');
     }
 
     getUser(): string {

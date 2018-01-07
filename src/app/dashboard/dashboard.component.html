@@ -1,0 +1,16 @@
+<h2>Dashboard</h2>
+
+<mat-grid-list cols="4" rowHeight="100px">
+  <mat-grid-tile
+    *ngFor="let tile of stats"
+    [colspan]="tile.cols"
+    [rowspan]="tile.rows"
+    [style.background]="tile.color">
+    <mat-chip-list>
+      <mat-icon aria-hidden="true">{{ tile.icon }}</mat-icon>
+      <span class="cdk-visually-hidden">trips completed</span>
+
+      <mat-chip>{{ tile.text }} {{ tile.count }}</mat-chip>
+    </mat-chip-list>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Experiment Results</h1>
+
+<div mat-dialog-content>
+  <p>Following results are generated</p>
+
+  <label>Data Size:</label> {{ data['data-size'] }}<br>
+  <label>Bound:</label> {{ data['bound'] }}<br>
+  <label>Success %:</label> {{ data['success %'] }}<br>
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button mat-raised-button mat-button-close
+          (click)="onNoClick()" tabindex="-1">Close</button>
+</div>

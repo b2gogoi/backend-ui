@@ -1,0 +1,38 @@
+  <h1 mat-dialog-title>
+    {{ driver.firstname }} {{ driver.lastname }}
+
+    ( {{ driver.phone | phone }} )
+  </h1>
+  <div mat-dialog-content>
+    <div class="picture">
+      <img width="200px" height="200px" src="{{ driver['image_url']}}" alt="Photo of driver">
+    </div>
+    <div>
+      <p>Email : {{ driver.email }}</p>
+      <p>Applied on : {{ driver['created_at'] | date: 'dd-MMM-yyyy' }}</p>
+      <p>Driving License No. : {{ driver['license'] }}</p>
+
+
+    </div>
+
+    <mat-expansion-panel *ngFor="let trip of trips; let i = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Trip Id {{ trip.id }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <i>Status: {{ trip.status }}</i>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="container">
+        <label>Request Date</label> {{ trip.created_at | date: 'yyyy-MM-dd HH:mm' }}<br>
+        <label>Trip Cost</label> {{ trip.actual_cost }}<br>
+        <label>Trip Distance</label> {{ trip.actual_distance }}<br>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
+  </div>
+

@@ -1,0 +1,85 @@
+<h2>Drivers</h2>
+
+<p></p>
+<div *ngIf="!applicationDatabase">
+  No drivers found
+</div>
+
+<app-download-csv *ngIf="!applicationDatabase"
+                  [displayedColumns]="displayedColumns"
+                  [headers]="header"
+                  [dataSource]="dataSource"
+                  fileName="Drivers"></app-download-csv>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['id'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['name'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.firstname + ' ' + row.lastname }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['phone'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.phone | phone }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['email'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="active">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['active'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.active == 1? 'Online': 'Offline'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="vehicleType">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['vehicleType'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.vehicle_type | vehicle }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="plateNo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['plateNo'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.plate_no }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="modelMake">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['modelMake'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.model_make }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="updatedAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['updatedAt'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.updated_at }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['updatedAt'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['updatedAt'] | date: 'dd-MMM-yy hh:mm'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['action'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a (click)="showDriver(row)"><mat-icon>zoom_in</mat-icon></a>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator *ngIf="applicationDatabase" #paginator
+                 [length]="applicationDatabase.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[10, 25, 50]">
+  </mat-paginator>
+</div>

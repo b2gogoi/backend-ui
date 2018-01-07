@@ -1,0 +1,100 @@
+<h2>Loans Due</h2>
+
+<form>
+
+  <mat-form-field>
+    <input matInput placeholder="Due date" type="text" readonly
+           value="{{ filterMap.duedate | date: 'dd-MMM-yy'}}">
+
+    <input matInput [matDatepicker]="picker" hidden
+           [formControl]="filterForm.controls.duedate" [(ngModel)]="filterMap.duedate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+
+    <mat-error *ngIf="filterForm.controls.duedate.hasError('required')">
+      Due date is <strong>invalid</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <!--<button mat-mini-fab color="primary" matTooltip="Search with the applied filter"
+          [disabled]="filterForm.invalid">
+    <mat-icon aria-label="search">search</mat-icon>
+  </button>-->
+
+  <a (click)="getLoansDue()" class="submit">
+    <mat-icon aria-label="search">search</mat-icon>
+  </a>
+
+  <app-download-csv
+    *ngIf="loansDueDatabase.data.length > 0"
+    [displayedColumns]="displayedColumns"
+    [headers]="header"
+    [dataSource]="dataSource"
+    fileName="Loans due"></app-download-csv>
+
+</form>
+
+<p><span *ngIf="loansDueDatabase.data.length == 0"><i>No loans due on this date</i></span></p>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <!--<ng-container *ngFor="let col of displayedColumns" matColumnDef="{{col}}">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header[col] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ customCellView[col]? customCellView[col](row[col]) : row[col] }} </mat-cell>
+    </ng-container>-->
+
+    <ng-container matColumnDef="userId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['userId'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a (click)="showUser(row['userId'])">{{ row['userId'] }}</a>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loanId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['loanId'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['loanId'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mobileNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['mobileNumber'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a (click)="showUser(row['userId'])">{{ row['mobileNumber'] }}</a>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['name'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a (click)="showUser(row['userId'])">{{ row['name'] }}</a>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="amountDue">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['amountDue'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['amountDue'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dueDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['dueDate'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['dueDate'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a (click)="showUser(row['userId'])"><mat-icon>open_in_new</mat-icon></a>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator *ngIf="loansDueDatabase" #paginator
+                 [length]="loansDueDatabase.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="5"
+                 [pageSizeOptions]="[5, 10, 25, 50]">
+  </mat-paginator>
+</div>

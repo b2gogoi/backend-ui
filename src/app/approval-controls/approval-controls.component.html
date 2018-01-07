@@ -1,0 +1,52 @@
+<h2>Approval Controls</h2>
+
+<form (ngSubmit)="update(controlsForm.value)" *ngIf="controlModel">
+  <mat-card color="primary" class="card">
+    <mat-card-content>
+      <mat-form-field>
+        <input required min="0" placeholder="Bound" type="number" matInput tabindex="1"
+               name="bound"
+               [formControl]="controlsForm.controls.bound" [(ngModel)]="controlModel.bound" />
+        <mat-error *ngIf="controlsForm.controls.bound.hasError('required')">
+          Bound is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="controlsForm.controls.bound.hasError('min')">
+          Bound should be a positive integer
+        </mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select tabindex="2" placeholder="Modulo Comparator" [(ngModel)]="controlModel.operator"
+                      [formControl]="controlsForm.controls['operator']" >
+          <mat-option *ngFor="let comparator of comparators" [value]="comparator">
+            <code>{{ comparator }}</code>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="controlsForm.controls.bound.hasError('required')">
+          Bound is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input required min="0" placeholder="Modulo Value" type="number" matInput tabindex="3"
+               name="operand"
+               [formControl]="controlsForm.controls.operand" [(ngModel)]="controlModel.operand" />
+        <mat-error *ngIf="controlsForm.controls.operand.hasError('required')">
+          Modulo Value is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="controlsForm.controls.operand.hasError('min')">
+          Modulo Value should be a positive integer
+        </mat-error>
+
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit"
+              [disabled]="controlsForm.pristine || controlsForm.invalid">Update</button>
+
+      <button mat-raised-button color="accent" type="button"
+              (click)="experiment(controlsForm.value)" [disabled]="controlsForm.invalid">Experiment</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

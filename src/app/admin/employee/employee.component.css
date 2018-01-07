@@ -1,0 +1,22 @@
+.picture {
+  float: right;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.td {
+  padding: 10px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+button.upload {
+  float: right;
+  position: relative;
+  top: -36px;
+}
+

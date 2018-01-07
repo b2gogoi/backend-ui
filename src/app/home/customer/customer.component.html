@@ -1,0 +1,88 @@
+<h2>{{ (user? user.firstName: 'Name not linked') || 'Name not linked'}}</h2>
+
+<div *ngIf="!user">
+  <p>Customer details not available</p>
+</div>
+
+<mat-card *ngIf="user">
+  <mat-card-header>
+    <mat-card-title>Customer Information</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <label>City of Residence</label> {{ user.city }}<br>
+    <label>Phone Number</label> {{ user.mobileNumber }}<br>
+    <label>Date of Birth</label> <i>Not linked yet</i><br>
+    <label>Loans Taken</label> {{ loans.length }}<br>
+    <label>Attribution</label> <i>Not sourced yet</i><br>
+  </mat-card-content>
+  <mat-card-actions *ngIf="loans.length > 0">
+    <button mat-raised-button type="button" (click)="getUserCurrentLoan(user.id)">View Loan Application</button>
+  </mat-card-actions>
+</mat-card>
+
+<p></p>
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Transaction History
+    </mat-panel-title>
+    <mat-panel-description>
+      <i>No. of transactions: {{ transactions.length }}</i>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div class="table-responsive">
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="">Transaction Id</th>
+        <th class="">Loan Id</th>
+        <th class="">Type</th>
+        <th class="">Amount</th>
+        <th class="">From(vpa)</th>
+        <th class="">To(vpa)</th>
+        <th class="">Timestamp</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let txn of transactions">
+        <td>{{ txn.id }}</td>
+        <td>{{ txn.loanId || ''}}</td>
+        <td>{{ txn.type }}</td>
+        <td>{{ txn.amt }}</td>
+        <td>{{ txn.fromVpa }}</td>
+        <td>{{ txn.toVpa }}</td>
+        <td>{{ txn.toVpa }}</td>
+        <td>{{ txn.created | date: 'yyyy-MM-dd HH:mm' }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</mat-expansion-panel>
+
+<p></p>
+
+<mat-expansion-panel *ngFor="let loan of loans; let i = index">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Loan Applications {{ i+1 }}
+    </mat-panel-title>
+    <mat-panel-description>
+      <i>Status: {{ loan.loanStatus }}</i>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div class="container">
+    <label>Request Date</label> {{ loan.createdTime | date: 'yyyy-MM-dd HH:mm' }}<br>
+    <label>Loan Id</label> {{ loan.id }}<br>
+    <label>Loan Type</label> {{ loan.loanType }}<br>
+    <label>Amount Offered</label> {{ loan.offeredLoanAmount }}<br>
+    <label>Amount Accepted</label> {{ loan.acceptedLoanAmount }}<br>
+    <label>Repayment Status</label> {{ loan.repaymentStatus }}<br>
+    <label>Loan Tenure</label> {{ getLoanTerm(loan.loanTermId)? getLoanTerm(loan.loanTermId).tenure: '' }}<br>
+    <label>Interest Rate</label> {{ getLoanTerm(loan.loanTermId)? getLoanTerm(loan.loanTermId).interestRate: ''  }}<br>
+  </div>
+</mat-expansion-panel>

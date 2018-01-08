@@ -41,6 +41,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { DriversComponent } from './drivers/drivers.component';
 import { VehiclePipe } from './vehicle.pipe';
 import { DriverComponent } from './drivers/driver/driver.component';
+import { DocumentsComponent } from './components/documents/documents.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'applications', pathMatch: 'full' },
@@ -54,11 +55,11 @@ const routes: Routes = [
       component: HomeComponent,
       canActivate: [LoggedInGuard]
     },
-    /*{
-      path: 'dashboard/customer/:id',
-      component: CustomerComponent,
+    {
+      path: 'applications/driver/:id',
+      component: EmployeeComponent,
       canActivate: [LoggedInGuard]
-    },*/
+    },
     {
       path: 'drivers',
       component: DriversComponent,
@@ -78,7 +79,8 @@ const routes: Routes = [
     DownloadCsvComponent,
     EmployeeComponent,
     DriverComponent,
-    DriversComponent
+    DriversComponent,
+    DocumentsComponent
   ],
   entryComponents: [EmployeeComponent, DriverComponent ],
   imports: [

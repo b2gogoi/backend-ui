@@ -1,0 +1,57 @@
+<mat-form-field>
+  <input required placeholder="{{ document.placeholderText }} No."
+         matInput tabindex="1" minlength="6" maxlength="20"
+         [(ngModel)]="document.doc['doc_id']" [readonly]="document.uploaded"
+         [formControl]="documentForm.controls['docNo']" >
+  <mat-error *ngIf="documentForm.controls['docNo'].hasError('required')">
+    {{ document.placeholderText }} is <strong>required</strong>
+  </mat-error>
+  <mat-error *ngIf="documentForm.controls['docNo'].hasError('minlength')">
+    {{ document.placeholderText }} should be atleast <strong>6</strong> characters
+  </mat-error>
+</mat-form-field>
+
+
+<mat-form-field class="date">
+  <input matInput placeholder="Document Expiry" type="text" readonly
+         value="{{ document.doc['doc_expiry'] | date: 'yyyy-MM-dd'}}">
+
+  <input matInput [matDatepicker]="picker" hidden
+         [formControl]="documentForm.controls['docExpiry']"
+         [(ngModel)]="document.doc['doc_expiry']">
+  <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+  <mat-datepicker #picker [disabled]="document.uploaded"></mat-datepicker>
+
+  <mat-error *ngIf="documentForm.controls['docExpiry'].hasError('required')">
+    Expiry Date is <strong>required</strong>
+  </mat-error>
+</mat-form-field>
+
+
+<!--<mat-form-field (click)="mock(document.type)"
+class="fileupload" [class.clickable]="!fileName" >-->
+<mat-form-field>
+
+
+    <input type="text" matInput placeholder="Upload {{ document.placeholderText }}"
+           readonly
+           value="{{ fileName }}">
+
+    <mat-icon *ngIf="fileName && !document.uploaded" matSuffix>attachment</mat-icon>
+</mat-form-field>
+
+<span class="fileUpload" *ngIf="!fileName && !document.uploaded">
+  <mat-icon>folder_open</mat-icon>
+  <input type="file" *ngIf="!document.uploaded" class="upload" (change)="fileChange($event)" />
+</span>
+
+<a (click)="clear()" *ngIf="file && !document.uploaded" class="clickable"><mat-icon>clear</mat-icon></a>
+
+<a (click)="upload(document.type, driverId)" *ngIf="file && !document.uploaded" class="clickable" mat-tooltip="upload file">
+  <mat-icon >backup</mat-icon>
+</a>
+
+<mat-icon *ngIf="document.uploaded" color="primary">check_box</mat-icon>
+<p>
+  &nbsp;
+</p>

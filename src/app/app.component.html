@@ -16,7 +16,7 @@
       </nav>
     </div>
 
-    <div style="position: fixed; left: 92%">
+    <div style="position: absolute; left: 92%">
       <mat-menu #appMenu="matMenu">
         <button mat-menu-item>
           <mat-icon *ngIf="'admin' === authService.getRole()"> supervisor_account </mat-icon>

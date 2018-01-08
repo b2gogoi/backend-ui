@@ -18,6 +18,16 @@ export class AdminApiService {
       });
   }
 
+  getDriverDocs(id: number): Observable<any> {
+
+    const queryUrl = `/server/driver-docs/${id}`;
+
+    return this.http.get(queryUrl)
+      .map((response: Response) => {
+        return (<any>response.json());
+      });
+  }
+
   getVehicleTypes(): Observable<any> {
     return this.http.get('/server/rates').map((res: any) => res.json());
   }

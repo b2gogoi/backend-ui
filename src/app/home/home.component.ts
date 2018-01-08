@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {MatDialog, MatPaginator, MatSnackBar, MatSort} from '@angular/material';
+import { MatPaginator, MatSnackBar, MatSort} from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public adminApiService: AdminApiService,
-              public dialog: MatDialog,
               public snackBar: MatSnackBar,
               private router: Router) { }
 
@@ -54,7 +53,7 @@ export class HomeComponent implements OnInit {
     this.getDriverApplications();
   }
 
-  openDialog(driver: any): void {
+ /* openDialog(driver: any): void {
 
     const dialogRef = this.dialog.open(EmployeeComponent, {
       width: '400px',
@@ -70,7 +69,7 @@ export class HomeComponent implements OnInit {
         // User clicked 'Cancel' or clicked outside the dialog
       }
     });
-  }
+  }*/
 
   getVehicleTypes(): void {
 
@@ -147,28 +146,9 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  showDriver(id: number): void {
+  showDriverApplication(id: number): void {
     console.log('driver id : ', id);
-    this.adminApiService.getDriverDetails(id).subscribe(
-      data => {
-        console.log('driver :', data);
-        this.openDialog(data);
-      },
-      error => {
-        console.log('Err', error);
-        const errCode: number = error.status;
-
-        if (504 === errCode) {
-          this.openSnackBar(error, null, this.duration);
-
-        } else {
-          const errBody: any = error.json();
-          console.log('Err', errCode);
-
-          this.openSnackBar(errBody.message, null, this.duration);
-        }
-      }
-    );
+    this.router.navigate([`/applications/driver/${id}`]);
   }
 
   openSnackBar(message: string, action: string, duration: number) {

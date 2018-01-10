@@ -31,11 +31,11 @@
 <!--<mat-form-field (click)="mock(document.type)"
 class="fileupload" [class.clickable]="!fileName" >-->
 <mat-form-field>
-
-
+  <mat-icon *ngIf="document.uploaded" color="primary" matPrefix>check_box</mat-icon>
+  <!--<span>&nbsp;&nbsp;</span>-->
     <input type="text" matInput placeholder="Upload {{ document.placeholderText }}"
            readonly
-           value="{{ fileName }}">
+           value="{{ document.uploaded? document.doc.doc_file.split('/')[2] : fileName }}">
 
     <mat-icon *ngIf="fileName && !document.uploaded" matSuffix>attachment</mat-icon>
 </mat-form-field>
@@ -51,7 +51,10 @@ class="fileupload" [class.clickable]="!fileName" >-->
   <mat-icon >backup</mat-icon>
 </a>
 
-<mat-icon *ngIf="document.uploaded" color="primary">check_box</mat-icon>
+<a (click)="upload(document.type, driverId)" *ngIf="document.uploaded" class="clickable" mat-tooltip="download file">
+  <mat-icon >cloud_download</mat-icon>
+</a>
+
 <p>
   &nbsp;
 </p>

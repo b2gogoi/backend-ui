@@ -2,10 +2,10 @@ mat-form-field {
   margin-right: 20px;
 }
 
-/*.clickable {
+.clickable {
   cursor: pointer;
 }
-
+/*
 button.upload {
   float: right;
   position: relative;

@@ -31,15 +31,15 @@ export class EmployeeComponent implements OnInit {
   vehicleTypes: Array<any>;
   subscription: Subscription;
 
-  successMsg = {
+  /*successMsg = {
     tlc: 'TLC license uploaded successfully',
     drivers: 'Drivers license uploaded successfully',
     insuranceCert: 'Insurance Certificate uploaded successfully',
     commercialVehicleReg: 'Commercial Vehicle Registration uploaded successfully',
     tlcVehiclePermit: 'TLC-for-hire Vehicle Permit uploaded successfully'
-  };
+  };*/
 
-  file: File;
+  /*file: File;
   fileName: string;
   fileUploaded = false;
 
@@ -47,22 +47,17 @@ export class EmployeeComponent implements OnInit {
   dlFileName: string;
   dlFileUploaded = false;
 
-  @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('fileInput') fileInput: ElementRef;*/
 
   constructor(public snackBar: MatSnackBar, private http: Http,
-              private fb: FormBuilder, private renderer: Renderer,
+              private fb: FormBuilder,
               private activatedRoute: ActivatedRoute,
               public adminApiService: AdminApiService) {
 
     this.verificationForm = fb.group({
       'plateNo': ['', [Validators.required]],
       'modelMake': ['', [Validators.required]],
-      'registration': ['', [Validators.required]],
-      'license': ['', [Validators.required]],
-      'license_expiry': ['', [Validators.required]],
-      'tlc_license_no': ['', [Validators.required]],
-      'tlc_license_expiry': ['', [Validators.required]],
-      'tlc_license_img_url': ['', [Validators.required]],
+//      'registration': ['', [Validators.required]],
       'vehicleType': ['', null]
     });
   }
@@ -136,12 +131,6 @@ export class EmployeeComponent implements OnInit {
 
 
     });
-
-    /**/
-  }
-
-  onNoClick(): void {
-    // this.dialogRef.close();
   }
 
   updateDriver(driver: any): void {
@@ -168,74 +157,22 @@ export class EmployeeComponent implements OnInit {
 
   onSubmit(driver: any): void {
     console.log('onSubmit', driver);
-    this.updateDriver(driver);
-  }
 
-  fileChange(event): void {
-    console.log(event);
+    const missingDocs: string[] = [];
+    this.docs.forEach(doc => {
+      if (!doc.uploaded) {
+        missingDocs.push(doc.type);
+      }
+    });
 
-    const fileList: FileList = event.target.files;
-
-    if (fileList.length > 0) {
-      this.file = fileList[0];
-      this.fileName = this.file.name;
-      console.log(`filename set to : ${this.fileName}`);
-    }
-
-  }
-
-  /*upload(type): void {
-
-    let fileToUpload: File = null;
-
-    if ('drivers' === type) {
-      fileToUpload = this.dlFile;
+    if (0 === missingDocs.length) {
+      this.updateDriver(driver);
 
     } else {
-      fileToUpload = this.file;
-    }
+      this.openSnackBar(`${missingDocs.length} documents are still not uploaded`, null, 2000);
 
-    console.log('Uploading file : ' + fileToUpload.name);
-    console.log('Uploading file type : ' + type);
-
-    const formData: FormData = new FormData();
-    formData.append('upload', fileToUpload, fileToUpload.name);
-
-    const headers = new Headers();
-    headers.append('Accept', 'application/json');
-
-    this.http.post(`/server/file-upload/type/${type}`, formData)
-      .map((response: Response) => {
-        return (<any>response.json());
-      }).subscribe(
-      data => {
-        console.log(data);
-        this.fileUploaded = true;
-        this.openSnackBar(this.successMsg[type], null, this.duration);
-        this.clear();
-      },
-
-      error => this.openSnackBar('Error occurred during file upload', null, this.duration)
-
-    );
-
-  }*/
-
-  /*mock(): void {
-    if (!this.file) {
-      const event = new MouseEvent('click', {bubbles: true});
-      this.renderer.invokeElementMethod(
-        this.fileInput.nativeElement, 'dispatchEvent', [event]);
     }
   }
-
-  clear(): void {
-    // this.fileName = null;
-    this.file = null;
-    // this.fileUploaded = false;
-
-    // this.fileInput.nativeElement.value = null;
-  }*/
 
   openSnackBar(message: string, action: string, duration: number) {
     const snackRef = this.snackBar.open(message, action, {

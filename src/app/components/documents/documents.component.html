@@ -51,7 +51,7 @@ class="fileupload" [class.clickable]="!fileName" >-->
   <mat-icon >backup</mat-icon>
 </a>
 
-<a (click)="upload(document.type, driverId)" *ngIf="document.uploaded" class="clickable" mat-tooltip="download file">
+<a download href="{{ document.doc['doc_file'] }}" *ngIf="document.uploaded" class="clickable" mat-tooltip="download file">
   <mat-icon >cloud_download</mat-icon>
 </a>
 

@@ -14,6 +14,54 @@
 
     <p> Applied on : {{ driver['created_at'] | date: 'dd-MMM-yyyy' }}</p>
 
+    <mat-form-field>
+      <mat-select placeholder="Vehicle Type" [(ngModel)]="driver['vehicle_type']"
+                  [formControl]="verificationForm.controls['vehicleType']" >
+        <mat-option *ngFor="let type of vehicleTypes" [value]="type.type">
+          <b style="text-transform: uppercase">{{ type.info }}</b>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required placeholder="Car plate no." matInput tabindex="1" minlength="6" maxlength="20"
+             [(ngModel)]="driver['plate_no']" [formControl]="verificationForm.controls['plateNo']" >
+
+      <mat-error *ngIf="verificationForm.controls.plateNo.hasError('required')">
+        Car plate no is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="verificationForm.controls.plateNo.hasError('minlength')">
+        Car plate no should be atleast <strong>5</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required placeholder="Car Model" matInput tabindex="1" minlength="6" maxlength="20"
+             [(ngModel)]="driver['model_make']" [formControl]="verificationForm.controls['modelMake']" >
+      <mat-hint align="end">Car make with model and year</mat-hint>
+      <mat-error *ngIf="verificationForm.controls.modelMake.hasError('required')">
+        Car Model is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="verificationForm.controls.modelMake.hasError('minlength')">
+        Car Model should be atleast <strong>6</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <!--<mat-form-field>
+      <input required placeholder="Car Registration No." matInput tabindex="1" minlength="6" maxlength="20"
+             [(ngModel)]="driver['registration']" [formControl]="verificationForm.controls['registration']" >
+      <mat-error *ngIf="verificationForm.controls.registration.hasError('required')">
+        Registration no. is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="verificationForm.controls.registration.hasError('minlength')">
+        Registration no. should be atleast <strong>6</strong> characters
+      </mat-error>
+    </mat-form-field>-->
+
+    <p>Fields with * are required.</p>
+
+    <p>&nbsp;&nbsp;</p>
+
     <mat-list *ngIf="docs">
       <h4 mat-subheader>Driver docs</h4>
       <mat-list-item *ngFor="let doc of docs">
@@ -25,233 +73,9 @@
       &nbsp;
     </p>
 
-    <!--<mat-list>
-      <h4 mat-subheader>Driver docs</h4>
-      <mat-list-item>
-        <mat-form-field>
-          <input required placeholder="TLC License No."
-                 matInput tabindex="1" minlength="6" maxlength="20"
-                 [(ngModel)]="driver['tlc_license_no']"
-                 [formControl]="verificationForm.controls['tlc_license_no']" >
-          <mat-error *ngIf="verificationForm.controls['tlc_license_no'].hasError('required')">
-            TLC License No. is <strong>required</strong>
-          </mat-error>
-          <mat-error *ngIf="verificationForm.controls['tlc_license_no'].hasError('minlength')">
-            TLC License no. should be atleast <strong>6</strong> characters
-          </mat-error>
-        </mat-form-field>
-
-        &nbsp;&nbsp;
-        <mat-form-field>
-          <input matInput placeholder="TLC Expiry" type="text" readonly
-                 value="{{ driver['tlc_license_expiry'] | date: 'dd-MMM-yy'}}">
-
-          <input matInput [matDatepicker]="tlc_picker" hidden
-                 [formControl]="verificationForm.controls['tlc_license_expiry']" [(ngModel)]="driver['tlc_license_expiry']">
-          <mat-datepicker-toggle matSuffix [for]="tlc_picker"></mat-datepicker-toggle>
-          <mat-datepicker #tlc_picker></mat-datepicker>
-
-          <mat-error *ngIf="verificationForm.controls['tlc_license_expiry'].hasError('required')">
-            TLC License Expiry Date is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-
-        &nbsp;&nbsp;
-        <mat-form-field (click)="mock()" class="fileupload" [class.clickable]="!fileName" >
-          <input type="text" matInput placeholder="Upload TLC License"
-                 readonly
-                 value="{{ fileName }}">
-          <mat-icon *ngIf="!fileName" matSuffix>folder_open</mat-icon>
-          <mat-icon *ngIf="fileName" matSuffix>attachment</mat-icon>
-          <mat-hint align="end">TLC License</mat-hint>
-
-        </mat-form-field>
-        <a (click)="clear()" *ngIf="file" class="clickable"><mat-icon>clear</mat-icon></a>
-
-        <input #fileInput style="display: none"
-               type="file" (change)="fileChange($event)">
-
-        &nbsp;&nbsp;
-        <ng-container>
-          <a (click)="upload('tlc')" *ngIf="file" class="clickable" mat-tooltip="upload file">
-            <mat-icon >backup</mat-icon>
-          </a>
-
-          <mat-icon *ngIf="fileUploaded" color="primary">check_box</mat-icon>
-        </ng-container>
-
-
-      </mat-list-item>
-      <p></p>
-      <p></p>
-      <mat-list-item>
-        <mat-form-field>
-          <input required placeholder="Driver's License No."
-                 matInput tabindex="1" minlength="6" maxlength="20"
-                 [(ngModel)]="driver['license']"
-                 [formControl]="verificationForm.controls['license']" >
-          <mat-error *ngIf="verificationForm.controls['license'].hasError('required')">
-            Driver's License No. is <strong>required</strong>
-          </mat-error>
-          <mat-error *ngIf="verificationForm.controls['license'].hasError('minlength')">
-            Driver's License no. should be atleast <strong>6</strong> characters
-          </mat-error>
-        </mat-form-field>
-
-        &nbsp;&nbsp;
-        <mat-form-field>
-          <input matInput placeholder="Driver's License Expiry" type="text" readonly
-                 value="{{ driver['license_expiry'] | date: 'dd-MMM-yy'}}">
-
-          <input matInput [matDatepicker]="lc_picker" hidden
-                 [formControl]="verificationForm.controls['license_expiry']" [(ngModel)]="driver['license_expiry']">
-          <mat-datepicker-toggle matSuffix [for]="lc_picker"></mat-datepicker-toggle>
-          <mat-datepicker #lc_picker></mat-datepicker>
-
-          <mat-error *ngIf="verificationForm.controls['license_expiry'].hasError('required')">
-            Driver's License Expiry Date is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-
-        &nbsp;&nbsp;
-        <mat-form-field (click)="mock()" class="fileupload" [class.clickable]="!dlFileName" >
-          <input type="text" matInput placeholder="Upload Driver's License"
-                 readonly
-                 value="{{ dlFileName }}">
-          <mat-icon *ngIf="!dlFileName" matSuffix>folder_open</mat-icon>
-          <mat-icon *ngIf="dlFileName" matSuffix>attachment</mat-icon>
-          <mat-hint align="end">Driver's License</mat-hint>
-
-        </mat-form-field>
-        <a (click)="clear()" *ngIf="dlFile" class="clickable"><mat-icon>clear</mat-icon></a>
-
-        <input #fileInput style="display: none"
-               type="file" (change)="fileChange($event)">
-
-        &nbsp;&nbsp;
-        <ng-container>
-          <a (click)="upload('drivers')" *ngIf="dlFile" class="clickable" mat-tooltip="upload file">
-            <mat-icon >backup</mat-icon>
-          </a>
-
-          <mat-icon *ngIf="dlFileUploaded" color="primary">check_box</mat-icon>
-        </ng-container>
-
-
-      </mat-list-item>
-
-      <mat-divider></mat-divider>
-    </mat-list>-->
-
-
-      <!--<mat-form-field>
-        <input required placeholder="Driving License No." matInput tabindex="1" minlength="6" maxlength="20"
-               [(ngModel)]="driver['license']" [formControl]="verificationForm.controls['license']" >
-        <mat-error *ngIf="verificationForm.controls.license.hasError('required')">
-          Driving License No. is <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="verificationForm.controls.license.hasError('minlength')">
-          Driving License no. should be atleast <strong>6</strong> characters
-        </mat-error>
-      </mat-form-field>
-
-      <table class="example-full-width" cellspacing="1"><tr>
-        <td>
-          <mat-form-field>
-            <input required placeholder="TLC License No."
-                   matInput tabindex="1" minlength="6" maxlength="20"
-                   [(ngModel)]="driver['tlc_license_no']"
-                   [formControl]="verificationForm.controls['tlc_license_no']" >
-            <mat-error *ngIf="verificationForm.controls['tlc_license_no'].hasError('required')">
-              TLC License No. is <strong>required</strong>
-            </mat-error>
-            <mat-error *ngIf="verificationForm.controls['tlc_license_no'].hasError('minlength')">
-              TLC License no. should be atleast <strong>6</strong> characters
-            </mat-error>
-          </mat-form-field>
-        </td>
-        <td>-->
-
-          <!--<mat-form-field>
-            <input required placeholder="TLC Expiry"
-                   matInput tabindex="1" minlength="6" maxlength="20"
-                   [(ngModel)]=""
-                   [formControl]="verificationForm.controls['tlc_license_expiry']" >
-            <mat-error *ngIf="verificationForm.controls['tlc_license_expiry'].hasError('required')">
-              TLC License Expiry Date is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>-->
-        <!--</td>
-      </tr></table>
-      <mat-form-field>
-        <input matInput placeholder="TLC Expiry" type="text" readonly
-               value="{{ driver['tlc_license_expiry'] | date: 'MM-dd-yyyy'}}">
-
-        <input matInput [matDatepicker]="picker" hidden
-               [formControl]="verificationForm.controls['tlc_license_expiry']" [(ngModel)]="driver['tlc_license_expiry']">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-
-        <mat-error *ngIf="verificationForm.controls['tlc_license_expiry'].hasError('required')">
-          TLC License Expiry Date is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      -->
-
-
-
-      <!--<mat-form-field>
-        <mat-select placeholder="Vehicle Type" [(ngModel)]="driver['vehicle_type']"
-                    [formControl]="verificationForm.controls['vehicleType']" >
-          <mat-option *ngFor="let type of vehicleTypes" [value]="type.type">
-            <b style="text-transform: uppercase">{{ type.info }}</b>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field>
-        <input required placeholder="Car plate no." matInput tabindex="1" minlength="6" maxlength="20"
-               [(ngModel)]="driver['plate_no']" [formControl]="verificationForm.controls['plateNo']" >
-
-        <mat-error *ngIf="verificationForm.controls.plateNo.hasError('required')">
-          Car plate no is <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="verificationForm.controls.plateNo.hasError('minlength')">
-          Car plate no should be atleast <strong>5</strong> characters
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field>
-        <input required placeholder="Car Model" matInput tabindex="1" minlength="6" maxlength="20"
-               [(ngModel)]="driver['model_make']" [formControl]="verificationForm.controls['modelMake']" >
-        <mat-hint align="end">Car make with model and year</mat-hint>
-        <mat-error *ngIf="verificationForm.controls.modelMake.hasError('required')">
-          Car Model is <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="verificationForm.controls.modelMake.hasError('minlength')">
-          Car Model should be atleast <strong>6</strong> characters
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field>
-        <input required placeholder="Car Registration No." matInput tabindex="1" minlength="6" maxlength="20"
-               [(ngModel)]="driver['registration']" [formControl]="verificationForm.controls['registration']" >
-        <mat-error *ngIf="verificationForm.controls.registration.hasError('required')">
-          Registration no. is <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="verificationForm.controls.registration.hasError('minlength')">
-          Registration no. should be atleast <strong>6</strong> characters
-        </mat-error>
-      </mat-form-field>
-
-      <p>Fields with * are required.</p>-->
-
   </div>
 
-  <!--<div mat-dialog-actions>-->
     <button mat-raised-button color="primary" type="submit"
-            [disabled]="verificationForm.pristine || verificationForm.invalid" tabindex="3">Update Verification</button>
-    <!--<button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>-->
-  <!--</div>-->
+            [disabled]="verificationForm.pristine || verificationForm.invalid"
+            tabindex="3">Verify</button>
 </form>

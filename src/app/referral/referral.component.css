@@ -1,0 +1,33 @@
+mat-grid-tile-header > mat-icon {
+  font-size: 40px !important;
+  position: relative;
+  left: 6px;
+  top: -6px;
+}
+
+mat-grid-tile {
+  font-size: large;
+}
+
+mat-grid-tile-header > span {
+  margin-left: 40px;
+  margin-right: 40px;
+  font-size: 20px;
+}
+
+.earnings {
+  font-size: 30px;
+  font-weight: bold;
+  position: relative;
+  left: 10px;
+  top: -4px;
+  margin-right: 40px;
+}
+
+.earnings-mini {
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  left: 5px;
+  top: -4px;
+}

@@ -35,7 +35,7 @@ class="fileupload" [class.clickable]="!fileName" >-->
   <!--<span>&nbsp;&nbsp;</span>-->
     <input type="text" matInput placeholder="Upload {{ document.placeholderText }}"
            readonly
-           value="{{ document.uploaded? document.doc.doc_file.split('/')[2] : fileName }}">
+           value="{{ document.doc['doc_file']? document.doc['doc_file'].split('/')[2] : fileName }}">
 
     <mat-icon *ngIf="fileName && !document.uploaded" matSuffix>attachment</mat-icon>
 </mat-form-field>

@@ -42,6 +42,8 @@ import { DriversComponent } from './drivers/drivers.component';
 import { VehiclePipe } from './vehicle.pipe';
 import { DriverComponent } from './drivers/driver/driver.component';
 import { DocumentsComponent } from './components/documents/documents.component';
+import { ReferralComponent } from './referral/referral.component';
+import { StatIconComponent } from './components/stat-icon/stat-icon.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'applications', pathMatch: 'full' },
@@ -53,6 +55,11 @@ const routes: Routes = [
     {
       path: 'applications',
       component: HomeComponent,
+      canActivate: [LoggedInGuard]
+    },
+    {
+      path: 'referral-stats',
+      component: ReferralComponent,
       canActivate: [LoggedInGuard]
     },
     {
@@ -80,7 +87,9 @@ const routes: Routes = [
     EmployeeComponent,
     DriverComponent,
     DriversComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    ReferralComponent,
+    StatIconComponent
   ],
   entryComponents: [EmployeeComponent, DriverComponent ],
   imports: [

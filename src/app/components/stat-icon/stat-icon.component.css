@@ -1,0 +1,16 @@
+mat-icon {
+  font-size: 40px !important;
+  position: relative;
+  left: 6px;
+  top: -6px;
+}
+
+
+mat-grid-tile {
+  font-size: large;
+}
+
+span {
+  margin-left: 40px;
+  font-size: 20px;
+}

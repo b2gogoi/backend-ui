@@ -8,6 +8,16 @@ export class AdminApiService {
 
   constructor(private http: Http) {}
 
+  getReferralStats(): Observable<any> {
+
+    const queryUrl = `/server/referral-stats`;
+
+    return this.http.get(queryUrl)
+      .map((response: Response) => {
+        return (<any>response.json());
+      });
+  }
+
   getDriverDetails(id: number): Observable<any> {
 
     const queryUrl = `/server/driver/${id}`;

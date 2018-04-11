@@ -1,4 +1,4 @@
-# India_AdminUI
-This repo contains the India Admin UI work
+# AdminUI
+This repo contains the Admin UI work
 
 This is being built with Angular

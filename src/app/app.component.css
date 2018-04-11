@@ -19,6 +19,7 @@
 
 .mat-app-background {
   min-height: 100%;
+  background-color: #ededed;
 }
 
 .user {
@@ -36,6 +37,10 @@
 .mat-tab-link {
   opacity: 0.8;
   min-width: unset;
+}
+
+mat-tab-label-active {
+  font-size: 16px;
 }
 
 .tabs {

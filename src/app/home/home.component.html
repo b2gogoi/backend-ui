@@ -5,13 +5,13 @@
   No pending driver applications found
 </div>
 
-<app-download-csv *ngIf="!applicationDatabase"
+<app-download-csv *ngIf="applicationDatabase"
   [displayedColumns]="displayedColumns"
   [headers]="header"
   [dataSource]="dataSource"
   fileName="Driver Applications"></app-download-csv>
 
-<div class="example-container mat-elevation-z8">
+<div class="mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="firstname">

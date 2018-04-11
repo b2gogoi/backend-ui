@@ -1,16 +1,140 @@
 <h2>Dashboard</h2>
 
-<mat-grid-list cols="4" rowHeight="100px">
-  <mat-grid-tile
-    *ngFor="let tile of stats"
-    [colspan]="tile.cols"
-    [rowspan]="tile.rows"
-    [style.background]="tile.color">
-    <mat-chip-list>
-      <mat-icon aria-hidden="true">{{ tile.icon }}</mat-icon>
-      <span class="cdk-visually-hidden">trips completed</span>
+<div class="row">
+  <div class="stat-box">
+    <div class="stat-box-header">
+      <span class="title">Total Trips</span>
 
-      <mat-chip>{{ tile.text }} {{ tile.count }}</mat-chip>
-    </mat-chip-list>
-  </mat-grid-tile>
-</mat-grid-list>
+      <a routerLink="/applications" class="end"><mat-icon>open_in_new</mat-icon></a>
+    </div>
+
+    <div class="content">
+      <div class="center">
+        <span class="par">
+          {{ dashBoardData.totalTrips }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="stat-box col2">
+    <div class="stat-box-header">
+      <!--<button mat-mini-fab color="primary">{{ passengersData.total }}</button>-->
+      <span class="title">Drivers Online</span>
+
+      <a routerLink="/applications" class="end"><mat-icon>open_in_new</mat-icon></a>
+    </div>
+
+    <div class="content">
+      <div class="center">
+        <span class="par">
+          {{ dashBoardData.driversAvailability.online }} /
+          {{ dashBoardData.driversAvailability.total }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-box col3">
+    <div class="stat-box-header">
+      <span class="title">Total Earnings</span>
+
+      <a routerLink="/applications" class="end"><mat-icon>open_in_new</mat-icon></a>
+    </div>
+
+    <div class="content">
+      <div class="center">
+        <span class="par">
+          {{ dashBoardData.totalEarnings | currency }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="stat-box">
+    <div class="stat-box-header">
+      <span class="title">Total Distance Covered</span>
+
+      <a routerLink="/applications" class="end"><mat-icon>open_in_new</mat-icon></a>
+    </div>
+
+    <div class="content">
+      <div class="center">
+        <span class="par">
+          {{ dashBoardData.totalDistance }} miles
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="stat-box col2">
+    <div class="stat-box-header">
+      <span class="title">Drivers Pending Verification</span>
+
+      <a routerLink="/applications" class="end"><mat-icon>open_in_new</mat-icon></a>
+    </div>
+
+    <div class="content">
+      <div class="center">
+        <span class="par">
+          {{ dashBoardData.driversPending }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="stat-box col3">
+    <div class="stat-box-header">
+      <span class="title">Ride Statistics</span>
+
+      <a class="data">Today</a>
+
+      <a routerLink="/applications" class="end"><mat-icon>open_in_new</mat-icon></a>
+    </div>
+
+    <div class="content">
+      <div class="no-center">
+        <div>
+          <label class="key-ok">LIVE</label><span> {{ dashBoardData.rideStats.live }}</span>
+        </div>
+        <div>
+          <label class="key-bad">CANCELLED</label><span>{{ dashBoardData.rideStats.cancelled }}</span>
+        </div>
+        <div>
+          <label class="key-good">COMPLETED</label><span>{{ dashBoardData.rideStats.completed }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="stat-box">
+    <div class="stat-box-header circle">
+      <button mat-mini-fab color="primary">{{ passengersData.total }}</button>
+      <span class="title">Passengers Onboard</span>
+
+      <a routerLink="/applications" class="end"><mat-icon>open_in_new</mat-icon></a>
+    </div>
+
+    <div class="content">
+      <!--<button mat-mini-fab class="floating" color="primary">{{ passengersData.total }}</button>-->
+
+      <div style="overflow: auto; height: 200px">
+        <mat-list dense>
+          <a *ngFor="let p of passengersData.passengers">
+            <mat-list-item>{{ p.name }}</mat-list-item>
+          </a>
+        </mat-list>
+      </div>
+    </div>
+
+  </div>
+</div>

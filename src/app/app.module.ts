@@ -14,7 +14,7 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
-  MatInputModule, MatMenuModule,
+  MatInputModule, MatListModule, MatMenuModule,
   MatNativeDateModule,
   MatPaginatorModule,
   MatSelectModule,
@@ -44,6 +44,7 @@ import { DriverComponent } from './drivers/driver/driver.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { ReferralComponent } from './referral/referral.component';
 import { StatIconComponent } from './components/stat-icon/stat-icon.component';
+import { CurrencyPipe } from './currency.pipe';
 
 const routes: Routes = [
     { path: '', redirectTo: 'applications', pathMatch: 'full' },
@@ -89,7 +90,8 @@ const routes: Routes = [
     DriversComponent,
     DocumentsComponent,
     ReferralComponent,
-    StatIconComponent
+    StatIconComponent,
+    CurrencyPipe
   ],
   entryComponents: [EmployeeComponent, DriverComponent ],
   imports: [
@@ -110,6 +112,7 @@ const routes: Routes = [
     MatGridListModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatMenuModule,
     MatNativeDateModule,
     MatPaginatorModule,

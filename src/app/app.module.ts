@@ -46,9 +46,10 @@ import { ReferralComponent } from './referral/referral.component';
 import { StatIconComponent } from './components/stat-icon/stat-icon.component';
 import { CurrencyPipe } from './currency.pipe';
 import { PaymentsComponent } from './payments/payments.component';
+import { TripsComponent } from './trips/trips.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'applications', pathMatch: 'full' },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     {
       path: 'dashboard',
       component: DashboardComponent,
@@ -79,6 +80,11 @@ const routes: Routes = [
       component: DriversComponent,
       canActivate: [LoggedInGuard]
     },
+    {
+      path: 'trips',
+      component: TripsComponent,
+      canActivate: [LoggedInGuard]
+    },
     { path: 'login', component: LoginComponent }
 ];
 
@@ -98,7 +104,8 @@ const routes: Routes = [
     ReferralComponent,
     StatIconComponent,
     CurrencyPipe,
-    PaymentsComponent
+    PaymentsComponent,
+    TripsComponent
   ],
   entryComponents: [EmployeeComponent, DriverComponent ],
   imports: [

@@ -28,6 +28,16 @@ export class AdminApiService {
       });
   }
 
+  getAllTrips(): Observable<any> {
+
+    const queryUrl = `/server/trips`;
+
+    return this.http.get(queryUrl)
+      .map((response: Response) => {
+        return (<any>response.json());
+      });
+  }
+
   getReferralStats(): Observable<any> {
 
     const queryUrl = `/server/referral-stats`;

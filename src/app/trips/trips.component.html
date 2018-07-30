@@ -1,0 +1,82 @@
+<h2>Trips</h2>
+
+<p></p>
+<div *ngIf="!applicationDatabase">
+  No trips found
+</div>
+
+<app-download-csv *ngIf="applicationDatabase"
+                  [displayedColumns]="displayedColumns"
+                  [headers]="header"
+                  [dataSource]="dataSource"
+                  fileName="Trips"></app-download-csv>
+
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['id'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="vehicle_type">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['vehicle_type'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ vehicleClassMap[row['vehicle_type']] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['status'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.status }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="payment_status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['payment_status'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['payment_status'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['cost'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['cost'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="distance">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['distance'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['distance'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rider_account_id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['rider_account_id'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['rider_account_id'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="driver_account_id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['driver_account_id'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['driver_account_id'] || '--' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="pickup_address">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['pickup_address'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['pickup_address'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="drop_address">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['drop_address'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['drop_address'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="updated_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['updated_at'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['updated_at'] }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator *ngIf="applicationDatabase" #paginator
+                 [length]="applicationDatabase.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 50]">
+  </mat-paginator>
+</div>

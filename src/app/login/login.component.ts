@@ -34,6 +34,7 @@ export class LoginComponent {
         new Tabs('Driver Applications', '/applications', 'applications'),
         new Tabs('Drivers', '/drivers', 'drivers'),
         new Tabs('Referral Stats', '/referral-stats', 'referral-stats'),
+        new Tabs('Trips', '/trips', 'trips'),
         new Tabs('Payments', '/payments', 'payments')
       ];
 

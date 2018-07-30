@@ -8,6 +8,26 @@ export class AdminApiService {
 
   constructor(private http: Http) {}
 
+  getDashboardStats(): Observable<any> {
+
+    const queryUrl = `/server/dashboard-stats`;
+
+    return this.http.get(queryUrl)
+      .map((response: Response) => {
+        return (<any>response.json());
+      });
+  }
+
+  getLivePassengers(): Observable<any> {
+
+    const queryUrl = `/server/dashboard-passengers`;
+
+    return this.http.get(queryUrl)
+      .map((response: Response) => {
+        return (<any>response.json());
+      });
+  }
+
   getReferralStats(): Observable<any> {
 
     const queryUrl = `/server/referral-stats`;
@@ -21,6 +41,16 @@ export class AdminApiService {
   getDriverDetails(id: number): Observable<any> {
 
     const queryUrl = `/server/driver/${id}`;
+
+    return this.http.get(queryUrl)
+      .map((response: Response) => {
+        return (<any>response.json());
+      });
+  }
+
+  getPaymentDetails(): Observable<any> {
+
+    const queryUrl = `/server/payments`;
 
     return this.http.get(queryUrl)
       .map((response: Response) => {

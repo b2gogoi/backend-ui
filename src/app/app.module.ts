@@ -45,6 +45,7 @@ import { DocumentsComponent } from './components/documents/documents.component';
 import { ReferralComponent } from './referral/referral.component';
 import { StatIconComponent } from './components/stat-icon/stat-icon.component';
 import { CurrencyPipe } from './currency.pipe';
+import { PaymentsComponent } from './payments/payments.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'applications', pathMatch: 'full' },
@@ -61,6 +62,11 @@ const routes: Routes = [
     {
       path: 'referral-stats',
       component: ReferralComponent,
+      canActivate: [LoggedInGuard]
+    },
+    {
+      path: 'payments',
+      component: PaymentsComponent,
       canActivate: [LoggedInGuard]
     },
     {
@@ -91,7 +97,8 @@ const routes: Routes = [
     DocumentsComponent,
     ReferralComponent,
     StatIconComponent,
-    CurrencyPipe
+    CurrencyPipe,
+    PaymentsComponent
   ],
   entryComponents: [EmployeeComponent, DriverComponent ],
   imports: [

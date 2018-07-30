@@ -1,0 +1,114 @@
+<mat-tab-group>
+  <mat-tab label="Total">
+    <div id="total">
+      <div>
+        <p>
+          <span class="par">Total: {{ totals.total | currency }}</span>
+        </p>
+      </div>
+
+      <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="tripId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['tripId'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.tripId }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['date'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.date | date: 'dd-MMM-yy'}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="time">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['time'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.date | date: 'hh:mm'}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="distance">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['distance'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.distance }}  </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['amount'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.amount | currency}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="referralEarnings">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['referralEarnings'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.referralEarnings | currency}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator *ngIf="applicationDatabase" #paginator
+                       [length]="applicationDatabase.data.length"
+                       [pageIndex]="0"
+                       [pageSize]="10"
+                       [pageSizeOptions]="[10, 25, 50]">
+        </mat-paginator>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Drivers">
+    <div id="driver">
+      <div>
+        <p>
+          <span class="par2">Earnings: {{ drivers.total | currency }}</span>
+        </p>
+        <p>
+          <span class="par2">Payments Processed: {{ drivers.paid | currency }}</span>
+        </p>
+        <p>
+          <span class="par2">Payable: {{ drivers.payable | currency }}</span>
+        </p>
+      </div>
+
+      <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="driverDataSource" matSort>
+
+          <ng-container matColumnDef="driverId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ driverHeader['driverId'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.driverId }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ driverHeader['name'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="earnings">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ driverHeader['earnings'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.earnings | currency}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="payable">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ driverHeader['payable'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.payable | currency}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="referralEarnings">
+            <mat-header-cell *matHeaderCellDef> {{ driverHeader['referralEarnings'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.referralEarnings | currency}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="driverDisplayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: driverDisplayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator *ngIf="driverDatabase" #paginator
+                       [length]="driverDatabase.data.length"
+                       [pageIndex]="0"
+                       [pageSize]="10"
+                       [pageSizeOptions]="[10, 25, 50]">
+        </mat-paginator>
+      </div>
+    </div>
+  </mat-tab>
+  <!--<mat-tab label="Riders">Content 2</mat-tab>-->
+  <!--<mat-tab label="Referral">Content 2</mat-tab>-->
+</mat-tab-group>

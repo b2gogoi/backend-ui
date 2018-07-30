@@ -1,6 +1,6 @@
 <h2>Dashboard</h2>
 
-<div class="row">
+<div class="row" *ngIf="dashBoardData">
   <div class="stat-box">
     <div class="stat-box-header">
       <span class="title">Total Trips</span>
@@ -20,7 +20,6 @@
 
   <div class="stat-box col2">
     <div class="stat-box-header">
-      <!--<button mat-mini-fab color="primary">{{ passengersData.total }}</button>-->
       <span class="title">Drivers Online</span>
 
       <a routerLink="/applications" class="end"><mat-icon>open_in_new</mat-icon></a>
@@ -40,7 +39,7 @@
     <div class="stat-box-header">
       <span class="title">Total Earnings</span>
 
-      <a routerLink="/applications" class="end"><mat-icon>open_in_new</mat-icon></a>
+      <a routerLink="/payments" class="end"><mat-icon>open_in_new</mat-icon></a>
     </div>
 
     <div class="content">
@@ -54,7 +53,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="dashBoardData">
   <div class="stat-box">
     <div class="stat-box-header">
       <span class="title">Total Distance Covered</span>
@@ -115,7 +114,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="passengersData">
   <div class="stat-box">
     <div class="stat-box-header circle">
       <button mat-mini-fab color="primary">{{ passengersData.total }}</button>
@@ -125,12 +124,11 @@
     </div>
 
     <div class="content">
-      <!--<button mat-mini-fab class="floating" color="primary">{{ passengersData.total }}</button>-->
 
       <div style="overflow: auto; height: 200px">
         <mat-list dense>
           <a *ngFor="let p of passengersData.passengers">
-            <mat-list-item>{{ p.name }}</mat-list-item>
+            <mat-list-item>{{ p.firstname }}</mat-list-item>
           </a>
         </mat-list>
       </div>

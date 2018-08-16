@@ -1,0 +1,88 @@
+<form [formGroup]="typeForm" (ngSubmit)="onSubmit(data)">
+  <h1 mat-dialog-title>Add Vehicle Type</h1>
+  <div mat-dialog-content>
+    <p>Fields with * are required.</p>
+
+    <div>
+      <mat-form-field>
+        <mat-select required placeholder="Class" [(ngModel)]="data.type"
+                    [formControl]="typeForm.controls['type']" >
+          <mat-option *ngFor="let type of dataSet.vehicleTypes" [value]="type">
+            <b>{{ type }}</b>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-select required placeholder="County" [(ngModel)]="data.county"
+                    [formControl]="typeForm.controls['county']" >
+          <mat-option *ngFor="let county of dataSet.county" [value]="county">
+            <b>{{ county }}</b>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="data.county && dataSet.airport[data.county]">
+      <mat-form-field>
+        <mat-select placeholder="Airport" [(ngModel)]="data.airport"
+                    [formControl]="typeForm.controls['airport']" >
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let airport of dataSet.airport[data.county]" [value]="airport">
+            <b>{{ airport }}</b>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="data.airport">
+        <input type="number" placeholder="Initial Charge (Airport)" matInput
+               [(ngModel)]="data['airport_initial_charge']" [formControl]="typeForm.controls['airport_initial_charge']" >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="data.airport">
+        <input type="number" placeholder="Per mile charges (Airport)" matInput
+               [(ngModel)]="data['airport_per_mile']" [formControl]="typeForm.controls['airport_per_mile']" >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="data.airport">
+        <input type="number" placeholder="Per minute charges (Airport)" matInput
+               [(ngModel)]="data['airport_per_minute']" [formControl]="typeForm.controls['airport_per_minute']" >
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input required type="number" placeholder="Initial Charge" matInput
+               [(ngModel)]="data['initial_charge']" [formControl]="typeForm.controls['initial_charge']" >
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input required type="number" placeholder="Per mile charges" matInput
+               [(ngModel)]="data['per_mile']" [formControl]="typeForm.controls['per_mile']" >
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input required type="number" placeholder="Commission %" matInput
+               [(ngModel)]="data['commission_percentage']" [formControl]="typeForm.controls['commission_percentage']" >
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input required type="number" placeholder="Cancellation Charge" matInput
+               [(ngModel)]="data['cancellation_charge']" [formControl]="typeForm.controls['cancellation_charge']" >
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" type="submit"
+            [disabled]="typeForm.pristine || typeForm.invalid" tabindex="3">Submit</button>
+    <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
+  </div>
+</form>

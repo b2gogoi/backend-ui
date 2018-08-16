@@ -47,6 +47,8 @@ import { StatIconComponent } from './components/stat-icon/stat-icon.component';
 import { CurrencyPipe } from './currency.pipe';
 import { PaymentsComponent } from './payments/payments.component';
 import { TripsComponent } from './trips/trips.component';
+import { VehicleTypeComponent } from './vehicle-type/vehicle-type.component';
+import { TypeComponent } from './vehicle-type/type/type.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -68,6 +70,11 @@ const routes: Routes = [
     {
       path: 'payments',
       component: PaymentsComponent,
+      canActivate: [LoggedInGuard]
+    },
+    {
+      path: 'vehicle-type',
+      component: VehicleTypeComponent,
       canActivate: [LoggedInGuard]
     },
     {
@@ -105,9 +112,11 @@ const routes: Routes = [
     StatIconComponent,
     CurrencyPipe,
     PaymentsComponent,
-    TripsComponent
+    TripsComponent,
+    VehicleTypeComponent,
+    TypeComponent
   ],
-  entryComponents: [EmployeeComponent, DriverComponent ],
+  entryComponents: [EmployeeComponent, DriverComponent, TypeComponent ],
   imports: [
     BrowserModule,
     FormsModule,

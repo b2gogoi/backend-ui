@@ -78,6 +78,14 @@ export class AdminApiService {
       });
   }
 
+  allVehicleTypes(): Observable<any> {
+    return this.http.get('/server/vehicle-type').map((res: any) => res.json());
+  }
+
+  addNewVehicleType(data: any): Observable<any> {
+    return this.http.post(`/server/vehicle-type`, data).map((res: any) => res.json());
+  }
+
   getVehicleTypes(): Observable<any> {
     return this.http.get('/server/rates').map((res: any) => res.json());
   }

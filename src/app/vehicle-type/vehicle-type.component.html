@@ -1,0 +1,80 @@
+<h2>Vehicle Type</h2>
+
+<div>
+  <button mat-raised-button color="primary" (click)="openDialog()">Add New Vehicle Type</button>
+</div>
+
+<div *ngIf="applicationDatabase" class="mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['id'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['type'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['type'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="county">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['county'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['county'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="initial_charge">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['initial_charge'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['initial_charge'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="per_mile">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['per_mile'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['per_mile'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="commission_percentage">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['commission_percentage'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['commission_percentage'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cancellation_charge">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['cancellation_charge'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['cancellation_charge'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="airport">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['airport'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['airport'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="airport_initial_charge">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['airport_initial_charge'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['airport_initial_charge'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="airport_per_mile">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['airport_per_mile'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['airport_per_mile'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="airport_per_minute">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['airport_per_minute'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['airport_per_minute'] }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="updated_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['updated_at'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row['updated_at'] }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator *ngIf="applicationDatabase" #paginator
+                 [length]="applicationDatabase.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[10, 25, 50]">
+  </mat-paginator>
+</div>

@@ -6,7 +6,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AdminApiService {
 
+  private username: string;
+
   constructor(private http: Http) {}
+
+  setAuths(username: string): void {
+    this.username = username;
+  }
 
   getDashboardStats(): Observable<any> {
 
@@ -127,6 +133,42 @@ export class AdminApiService {
     opts.headers = headers;
 
     return this.http.get(`/server/driver/${id}/trips`, opts).map((res: any) => res.json());
+  }
+
+  employees(): Observable<any> {
+
+    const queryUrl = '/server/employees';
+
+    return this.http.get(queryUrl, this.getOptions())
+      .map((response: Response) => {
+        return (<any>response.json());
+      });
+  }
+
+  createEmployee(user: string, name: string, role: string, email: string, password: string): Observable<any> {
+
+    const userObj = {
+      'username': user,
+      'name': name,
+      'role': role,
+      'email': email,
+      'password': password
+    };
+
+    return this.http.post('/server/employees', userObj, this.getOptions()).map((res: any) => res.json());
+  }
+
+  getOptions(): RequestOptions {
+    const options = new RequestOptions({
+      headers: this.getHeaders()
+    });
+
+    return options;
+  }
+
+  getHeaders(): Headers {
+    const headers = new Headers({ 'user': this.username });
+    return headers;
   }
 
 }

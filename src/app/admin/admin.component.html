@@ -1,0 +1,137 @@
+<h2>Admin User Access</h2>
+
+<div>
+  <button mat-raised-button color="primary" (click)="openDialog()">Create New User</button>
+  <!--<app-download-csv
+    [displayedColumns]="displayedColumns"
+    [headers]="header"
+    [dataSource]="dataSource"
+    fileName="Admin Users"></app-download-csv>-->
+</div>
+
+<div class="filter-form">
+  <mat-card>
+    <form (ngSubmit)="filterTable(filterForm.value)" (keyup.enter)="filterTable(filterForm.value)">
+      <label>Filter by: </label>
+      <mat-form-field>
+        <input matInput placeholder="Id" type="number"
+               [formControl]="filterForm.controls.id">
+        <mat-error *ngIf="filterForm.controls.id.hasError('min')">
+          Id must be positve integer
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Username" type="text"
+               [formControl]="filterForm.controls.username">
+        <mat-hint align="end">partial case insensitive</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Name" type="text"
+               [formControl]="filterForm.controls.name">
+        <mat-hint align="end">partial case insensitive</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Role" [formControl]="filterForm.controls['role']" >
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let role of roles" [value]="role.role | titlecase">
+            <b>{{ role.role | titlecase }}</b>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!--<button mat-mini-fab color="primary" matTooltip="Search with the applied filter"
+			  [disabled]="filterForm.invalid">
+		<mat-icon aria-label="search">search</mat-icon>
+	  </button>-->
+
+      <button mat-mini-fab color="primary" type="submit" disabled
+              [disabled]="!filterForm.valid">
+        <mat-icon aria-label="search">filter_list</mat-icon>
+      </button>
+
+      <a (click)="clearFilter()" mat-tooltip="Clear filters">
+        <mat-icon aria-label="clear">clear</mat-icon>
+      </a>
+
+
+    </form>
+  </mat-card>
+</div>
+
+<p></p>
+
+<div *ngIf="!filteredDatabase">
+  No employees were found
+</div>
+
+<ng-container *ngIf="filteredDatabase">
+  <div class="mat-elevation-z8 filter-status">
+    <mat-chip-list>
+      <mat-chip color="primary" selected="true">
+        <span class="total">Total employees: {{ employees.length }}</span>
+
+        <i class="clear"></i>
+      </mat-chip>
+
+      <mat-chip *ngIf="isFiltered" selected="true">
+        <span class="filter-count">
+          Filtered: {{ filteredDatabase.data.length}}
+        </span>
+      </mat-chip>
+      <a class="clear-filter" *ngIf="isFiltered" (click)="clearFilter()" mat-tooltip="Clear filters">
+        <mat-icon>clear</mat-icon>
+      </a>
+    </mat-chip-list>
+
+    <app-download-csv *ngIf="filteredDatabase.data.length > 0"
+                      [displayedColumns]="displayedColumns"
+                      [headers]="header"
+                      [dataSource]="dataSource"
+                      fileName="Employees"></app-download-csv>
+  </div>
+</ng-container>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['id'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let emp"> {{ emp.id }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['username'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let emp"> {{ emp.username }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['name'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let emp"> {{ emp.name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['role'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        <span> {{ emp.role || 'Not assigned' }} </span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{ header['email'] }} </mat-header-cell>
+      <mat-cell *matCellDef="let emp"> {{ emp.email }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let emp; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator *ngIf="filteredDatabase" #paginator
+                 [length]="filteredDatabase.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="5"
+                 [pageSizeOptions]="[5, 10, 25, 50]">
+  </mat-paginator>
+</div>

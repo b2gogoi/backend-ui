@@ -1,0 +1,68 @@
+<form [formGroup]="empForm" (ngSubmit)="onSubmit(data)">
+  <h1 mat-dialog-title>Create User</h1>
+  <div mat-dialog-content>
+    <p>Fields with * are required.</p>
+    <mat-form-field>
+      <input required placeholder="Username" matInput tabindex="1" minlength="3" maxlength="20"
+             [(ngModel)]="data.username" [formControl]="empForm.controls['username']" >
+      <mat-hint align="end">atleast 3 characters</mat-hint>
+      <mat-error *ngIf="empForm.controls.username.hasError('required')">
+        Username is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="empForm.controls.username.hasError('minlength')">
+        Username should be atleast <strong>3</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required placeholder="Name" matInput tabindex="1" minlength="3" maxlength="20"
+             [(ngModel)]="data.name" [formControl]="empForm.controls['name']" >
+      <mat-hint align="end">atleast 3 characters</mat-hint>
+      <mat-error *ngIf="empForm.controls.name.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="empForm.controls.name.hasError('minlength')">
+        Name should be atleast <strong>3</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input placeholder="Email" matInput tabindex="1" minlength="3" maxlength="20"
+             [(ngModel)]="data.email" [formControl]="empForm.controls['email']" >
+      <mat-hint align="end">atleast 3 characters</mat-hint>
+      <mat-error *ngIf="empForm.controls.email.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="empForm.controls.email.hasError('minlength')">
+        Email should be atleast <strong>3</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input id="password" required placeholder="Temporary Password" matInput tabindex="2" minlength="4" maxlength="8"
+             [(ngModel)]="data.password" [formControl]="empForm.controls['password']" >
+      <mat-hint align="end">4 - 8 chars</mat-hint>
+      <mat-error *ngIf="empForm.controls.password.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="empForm.controls.password.hasError('minlength')">
+        Password should be atleast <strong>4</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Assign a role" [(ngModel)]="data.role"
+                  [formControl]="empForm.controls['role']" >
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let role of roles" [value]="role.role">
+          <b>{{ role.role | titlecase }}</b>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" type="submit"
+            [disabled]="empForm.pristine || empForm.invalid" tabindex="3">Create</button>
+    <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
+  </div>
+</form>

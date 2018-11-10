@@ -1,0 +1,32 @@
+.filter-form {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.filter-status {
+  margin: 5px 0px 5px 0px;
+  padding: 10px;
+
+}
+
+a.clear-filter {
+  position: relative;
+  top: 7px;
+}
+
+.total {
+  font-weight: bold;
+  font-size: small;
+}
+
+.filter-count {
+  font-style: italic;
+}
+
+.mat-mini-fab {
+  margin-left: 10px;
+}
+
+mat-form-field {
+  margin-left: 20px;
+}

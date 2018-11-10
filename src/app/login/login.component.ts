@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth.service';
 import { Tabs } from '../tabs.model';
+import {AdminApiService} from '../admin-api.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent {
   loginModel: any;
 
   constructor(public authService: AuthService,
+              private adminService: AdminApiService,
               private router: Router,
               public snackBar: MatSnackBar,
               private fb: FormBuilder) {
@@ -29,8 +31,11 @@ export class LoginComponent {
 
   private getTabsForRole(role: string): Tabs[] {
     let tabs: Tabs[];
+
+    if ('admin' === role) {
       tabs = [
         new Tabs('Dashboard', '/dashboard', 'dashboard'),
+        new Tabs('Admin', '/admin', 'admin'),
         new Tabs('Driver Applications', '/applications', 'applications'),
         new Tabs('Drivers', '/drivers', 'drivers'),
         new Tabs('Vehicle Type', '/vehicle-type', 'vehicle-type'),
@@ -38,6 +43,24 @@ export class LoginComponent {
         new Tabs('Trips', '/trips', 'trips'),
         new Tabs('Payments', '/payments', 'payments')
       ];
+    } else if ('operations' === role) {
+      tabs = [
+        new Tabs('Dashboard', '/dashboard', 'dashboard'),
+        new Tabs('Driver Applications', '/applications', 'applications'),
+        new Tabs('Drivers', '/drivers', 'drivers'),
+        new Tabs('Vehicle Type', '/vehicle-type', 'vehicle-type'),
+        new Tabs('Trips', '/trips', 'trips'),
+      ];
+
+
+    } else if ('finance' === role) {
+      tabs = [
+        new Tabs('Dashboard', '/dashboard', 'dashboard'),
+        new Tabs('Referral Stats', '/referral-stats', 'referral-stats'),
+        new Tabs('Trips', '/trips', 'trips'),
+        new Tabs('Payments', '/payments', 'payments')
+        ];
+    }
 
     return tabs;
   }
@@ -50,10 +73,12 @@ export class LoginComponent {
       data => {
         console.log('Received token : ', data.token);
         localStorage.setItem('token', data.token);
-        // localStorage.setItem('role', data.roleName);
+        localStorage.setItem('role', data.role);
         localStorage.setItem('username', loginModel.username);
 
-        const tabs = this.getTabsForRole(data.roleName);
+        this.adminService.setAuths(loginModel.username);
+
+        const tabs = this.getTabsForRole(data.role);
         this.authService.sendMessage(tabs);
 
         localStorage.setItem('tabs', JSON.stringify(tabs));

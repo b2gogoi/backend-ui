@@ -9,10 +9,13 @@ import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
 import { Tabs } from './tabs.model';
+import {AdminApiService} from './admin-api.service';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService,
+              private adminService: AdminApiService,
+              private router: Router) {
 
   }
 
@@ -33,6 +36,8 @@ export class LoggedInGuard implements CanActivate {
       console.log('Not logged so redirected to /login');
 
     } else {
+      const username = localStorage.getItem('username');
+      this.adminService.setAuths(username);
       const role = this.authService.getRole();
       console.log('role: ', role);
 

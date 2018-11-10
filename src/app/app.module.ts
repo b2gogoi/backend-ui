@@ -49,12 +49,19 @@ import { PaymentsComponent } from './payments/payments.component';
 import { TripsComponent } from './trips/trips.component';
 import { VehicleTypeComponent } from './vehicle-type/vehicle-type.component';
 import { TypeComponent } from './vehicle-type/type/type.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserComponent } from './admin/user/user.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     {
       path: 'dashboard',
       component: DashboardComponent,
+      canActivate: [LoggedInGuard]
+    },
+    {
+      path: 'admin',
+      component: AdminComponent,
       canActivate: [LoggedInGuard]
     },
     {
@@ -114,9 +121,11 @@ const routes: Routes = [
     PaymentsComponent,
     TripsComponent,
     VehicleTypeComponent,
-    TypeComponent
+    TypeComponent,
+    AdminComponent,
+    UserComponent
   ],
-  entryComponents: [EmployeeComponent, DriverComponent, TypeComponent ],
+  entryComponents: [EmployeeComponent, DriverComponent, TypeComponent, UserComponent ],
   imports: [
     BrowserModule,
     FormsModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatPaginator, MatSnackBar, MatSort} from '@angular/material';
+import { MatDialog, MatPaginator, MatSnackBar, MatSort} from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -15,6 +15,7 @@ import {TalaDatabase} from '../tala.database';
 import {TalaDatasource} from '../tala.datasource';
 import {Employee} from '../employee.model';
 import {EmployeeComponent} from '../employee/employee.component';
+import {ApplComponent} from './appl/appl.component';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit {
   duration = 2000;
   header: any = {};
   displayedColumns = ['firstname', 'lastname', 'phone', 'email', 'created_at', 'action'];
-
+  applications: any[];
   applicationDatabase: TalaDatabase = new TalaDatabase([]);
 
   dataSource: TalaDatasource | null;
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
 
   constructor(public adminApiService: AdminApiService,
               public snackBar: MatSnackBar,
+              public dialog: MatDialog,
               private router: Router) { }
 
   ngOnInit() {
@@ -53,23 +55,55 @@ export class HomeComponent implements OnInit {
     this.getDriverApplications();
   }
 
- /* openDialog(driver: any): void {
+  openDialog(): void {
+    const newUser: any = {
+      id: -1,
+      firstname: '',
+      lastname: '',
+      code: '',
+      phone: '',
+      type: 'driver',
+      password: '',
+      email: null,
+    };
 
-    const dialogRef = this.dialog.open(EmployeeComponent, {
-      width: '400px',
-      data: driver
+    const dialogRef = this.dialog.open(ApplComponent, {
+      width: '800px',
+      data: newUser
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('The dialog was closed : ', result);
-        this.updateDriver(result);
+        console.log('The dialog was closed, driverAppl : ', result);
+        this.regDriverAppl(result);
 
       } else {
         // User clicked 'Cancel' or clicked outside the dialog
       }
     });
-  }*/
+  }
+
+  regDriverAppl(appl: any): void {
+    this.adminApiService.registerDriverAppl(appl).subscribe(
+        data => {
+          console.log('Appl created :', data);
+
+          const driver = data.data;
+
+          const msg = `Driver application for ${driver.firstname} was created successfully`;
+
+          this.applications.push(driver);
+          console.log(this.applications);
+          this.applicationDatabase.dataChange.next(this.applications);
+
+          this.openSnackBar(msg, null, this.duration);
+
+        },
+        err => {
+          this.openSnackBar(`Unable to register driver application for : ${appl.firstname}`,
+            null, this.duration);
+        });
+  }
 
   getVehicleTypes(): void {
 
@@ -120,7 +154,8 @@ export class HomeComponent implements OnInit {
         console.log('No. of applications :', data.length);
 
         if (data.length > 0) {
-          this.applicationDatabase = new TalaDatabase(data);
+          this.applications = data;
+          this.applicationDatabase = new TalaDatabase(this.applications);
 
           this.dataSource = new TalaDatasource(
             this.applicationDatabase,

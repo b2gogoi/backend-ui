@@ -51,6 +51,7 @@ import { VehicleTypeComponent } from './vehicle-type/vehicle-type.component';
 import { TypeComponent } from './vehicle-type/type/type.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './admin/user/user.component';
+import { ApplComponent } from './home/appl/appl.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -123,9 +124,10 @@ const routes: Routes = [
     VehicleTypeComponent,
     TypeComponent,
     AdminComponent,
-    UserComponent
+    UserComponent,
+    ApplComponent
   ],
-  entryComponents: [EmployeeComponent, DriverComponent, TypeComponent, UserComponent ],
+  entryComponents: [EmployeeComponent, DriverComponent, TypeComponent, UserComponent, ApplComponent ],
   imports: [
     BrowserModule,
     FormsModule,

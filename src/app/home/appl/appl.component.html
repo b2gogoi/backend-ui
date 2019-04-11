@@ -1,0 +1,92 @@
+<form [formGroup]="applForm" (ngSubmit)="onSubmit(data)">
+  <h1 mat-dialog-title>Register Driver Application</h1>
+  <div mat-dialog-content>
+    <p>Fields with * are required.</p>
+    <mat-form-field>
+      <input required placeholder="Firstname" matInput tabindex="1" minlength="3" maxlength="20"
+             [(ngModel)]="data.firstname" [formControl]="applForm.controls['firstname']" >
+      <mat-hint align="end">atleast 3 characters</mat-hint>
+      <mat-error *ngIf="applForm.controls.firstname.hasError('required')">
+        Firstname is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="applForm.controls.firstname.hasError('minlength')">
+        Firstname should be atleast <strong>3</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required placeholder="Lastname" matInput tabindex="1" minlength="3" maxlength="20"
+             [(ngModel)]="data.lastname" [formControl]="applForm.controls['lastname']" >
+      <mat-hint align="end">atleast 3 characters</mat-hint>
+      <mat-error *ngIf="applForm.controls.lastname.hasError('required')">
+        Lastname is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="applForm.controls.lastname.hasError('minlength')">
+        Lastname should be atleast <strong>3</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input placeholder="Email" matInput tabindex="1" minlength="3" maxlength="20"
+             [(ngModel)]="data.email" [formControl]="applForm.controls['email']" >
+      <!--<mat-hint align="end">atleast 3 characters</mat-hint>-->
+      <mat-error *ngIf="applForm.controls.email.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="applForm.controls.email.hasError('minlength')">
+        Email should be atleast <strong>3</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input id="password" required placeholder="Password" matInput tabindex="2" minlength="4" maxlength="8"
+             [(ngModel)]="data.password" [formControl]="applForm.controls['password']" >
+      <mat-hint align="end">4 - 8 chars</mat-hint>
+      <mat-error *ngIf="applForm.controls.password.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="applForm.controls.password.hasError('minlength')">
+        Password should be atleast <strong>4</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required placeholder="Country Code" matInput tabindex="1" minlength="1" maxlength="5"
+             [(ngModel)]="data.code" [formControl]="applForm.controls['code']" >
+      <mat-hint align="end">International Country Code</mat-hint>
+      <mat-error *ngIf="applForm.controls.code.hasError('required')">
+        Code is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="applForm.controls.code.hasError('minlength')">
+        Code should be atleast<strong>1</strong> characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required placeholder="Phone number" matInput tabindex="1" minlength="10" maxlength="10"
+             [(ngModel)]="data.phone" [formControl]="applForm.controls['phone']" >
+      <mat-hint align="end">10 digits</mat-hint>
+      <mat-error *ngIf="applForm.controls.phone.hasError('required')">
+        Phone is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="applForm.controls.phone.hasError('minlength')">
+        Phone should be <strong>10</strong> digits
+      </mat-error>
+    </mat-form-field>
+
+    <!--<mat-form-field>
+      <mat-select placeholder="Assign a role" [(ngModel)]="data.role"
+                  [formControl]="applForm.controls['role']" >
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let role of roles" [value]="role.role">
+          <b>{{ role.role | titlecase }}</b>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>-->
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" type="submit"
+            [disabled]="applForm.pristine || applForm.invalid" tabindex="3">Register</button>
+    <button mat-button type="button" (click)="onNoClick()" tabindex="-1">Cancel</button>
+  </div>
+</form>

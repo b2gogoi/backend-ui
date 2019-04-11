@@ -158,6 +158,10 @@ export class AdminApiService {
     return this.http.post('/server/employees', userObj, this.getOptions()).map((res: any) => res.json());
   }
 
+  registerDriverAppl(appl: any): Observable<any> {
+    return this.http.post('/server/signup', appl, this.getOptions()).map((res: any) => res.json());
+  }
+
   getOptions(): RequestOptions {
     const options = new RequestOptions({
       headers: this.getHeaders()
